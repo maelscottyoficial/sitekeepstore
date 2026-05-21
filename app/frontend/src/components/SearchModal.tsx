@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Search, X, ShoppingCart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { promotionalProducts, bestSellers } from "@/data/products";
 import type { Product } from "@/data/products";
 
@@ -18,6 +19,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -54,6 +56,11 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
+
+  const handleProductClick = (productId: number) => {
+    onClose();
+    navigate(`/produto/${productId}`);
+  };
 
   if (!isOpen) return null;
 
@@ -122,7 +129,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   <button
                     key={product.id}
                     className="flex w-full items-center gap-4 rounded-xl px-3 py-3 text-left transition-colors hover:bg-white/5"
-                    onClick={onClose}
+                    onClick={() => handleProductClick(product.id)}
                   >
                     {/* Product thumbnail */}
                     <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${product.gradient}`}>

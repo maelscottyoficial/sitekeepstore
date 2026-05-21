@@ -1,4 +1,5 @@
 import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
 import type { Product } from "@/data/products";
 
 interface ProductGridProps {
@@ -21,8 +22,9 @@ export default function ProductGrid({ title, products, id }: ProductGridProps) {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
           {products.map((product) => (
-            <div
+            <Link
               key={product.id}
+              to={`/produto/${product.id}`}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-[#1a1a2e]/50 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/5"
             >
               {/* Discount Badge */}
@@ -63,12 +65,12 @@ export default function ProductGrid({ title, products, id }: ProductGridProps) {
                   </p>
 
                   {/* Buy Button */}
-                  <button className="w-full rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all hover:shadow-lg hover:shadow-indigo-500/25 hover:brightness-110">
+                  <span className="block w-full rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all group-hover:shadow-lg group-hover:shadow-indigo-500/25 group-hover:brightness-110">
                     COMPRAR
-                  </button>
+                  </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
