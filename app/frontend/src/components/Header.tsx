@@ -12,6 +12,7 @@ const navLinks = [
   { label: "Categorias", href: "#categorias" },
   { label: "Promoções", href: "#promocoes" },
   { label: "Mais Vendidos", href: "#mais-vendidos" },
+  { label: "Meus Pedidos", href: "/meus-pedidos" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -35,15 +36,25 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-6 md:flex">
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-medium text-gray-300 transition-colors hover:text-white"
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.href.startsWith("/") ? (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </nav>
 
           {/* Right Icons */}
@@ -88,16 +99,27 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="border-t border-white/5 bg-[#0a0a0f]/95 backdrop-blur-xl md:hidden">
             <nav className="flex flex-col gap-1 px-4 py-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                link.href.startsWith("/") ? (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:bg-white/5 hover:text-white"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
             </nav>
           </div>
         )}

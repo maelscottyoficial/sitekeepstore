@@ -2,9 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 import { ShoppingBag, CreditCard, QrCode, ArrowLeft, CheckCircle, Loader2 } from "lucide-react";
+import { createClient } from "@metagptx/web-sdk";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const client = createClient();
 
 type PaymentMethod = "pix" | "cartao";
 
@@ -260,7 +263,7 @@ export default function Checkout() {
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Mark all fields as touched
@@ -291,11 +294,54 @@ export default function Checkout() {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      // Check if user is logged in
+      const userResp = await client.auth.me();
+      if (!userResp?.data) {
+        toast.error("Faça login para finalizar seu pedido");
+        await client.auth.toLogin();
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Save order to backend
+      await client.entities.orders.create({
+        data: {
+          customer_name: nome,
+          customer_email: email,
+          customer_cpf: cpf.replace(/\D/g, ""),
+          customer_phone: telefone.replace(/\D/g, ""),
+          address_cep: cep.replace(/\D/g, ""),
+          address_street: rua,
+          address_number: numero,
+          address_complement: "",
+          address_neighborhood: bairro,
+          address_city: cidade,
+          address_state: estado,
+          items: JSON.stringify(
+            items.map((i) => ({
+              id: i.id,
+              name: i.name,
+              price: i.currentPrice,
+              quantity: i.quantity,
+              image: i.image,
+            }))
+          ),
+          total: totalPrice,
+          payment_method: paymentMethod,
+          status: "confirmado",
+        },
+      });
+
       clearCart();
       toast.success("Pedido realizado com sucesso!");
       navigate("/");
-    }, 1200);
+    } catch {
+      toast.error("Erro ao salvar pedido. Tente novamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
