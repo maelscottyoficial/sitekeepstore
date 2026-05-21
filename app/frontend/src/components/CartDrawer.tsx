@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { X, Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -12,6 +13,7 @@ function formatPrice(value: number): string {
 }
 
 export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
+  const navigate = useNavigate();
   const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCart();
 
   // Prevent body scroll when drawer is open
@@ -144,7 +146,13 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               <span className="text-sm font-medium text-gray-400">Subtotal</span>
               <span className="text-xl font-bold text-white">R$ {formatPrice(totalPrice)}</span>
             </div>
-            <button className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-indigo-500/20 transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:brightness-110">
+            <button
+              onClick={() => {
+                onClose();
+                navigate("/checkout");
+              }}
+              className="w-full rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-indigo-500/20 transition-all hover:shadow-xl hover:shadow-indigo-500/30 hover:brightness-110"
+            >
               Finalizar Compra
             </button>
           </div>
