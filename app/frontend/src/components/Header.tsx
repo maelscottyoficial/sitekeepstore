@@ -5,6 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { createClient } from "@metagptx/web-sdk";
 import SearchModal from "@/components/SearchModal";
 import CartDrawer from "@/components/CartDrawer";
+import LoginModal from "@/components/LoginModal";
 import { useCart } from "@/context/CartContext";
 
 const client = createClient();
@@ -23,6 +24,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { totalItems } = useCart();
   const navigate = useNavigate();
@@ -114,7 +116,7 @@ export default function Header() {
             </button>
             {!isLoggedIn ? (
               <button
-                onClick={handleLogin}
+                onClick={() => setLoginOpen(true)}
                 className="rounded-full p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
                 aria-label="Entrar"
               >
@@ -193,6 +195,9 @@ export default function Header() {
 
       {/* Cart Drawer */}
       <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+
+      {/* Login Modal */}
+      <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
     </>
   );
 }

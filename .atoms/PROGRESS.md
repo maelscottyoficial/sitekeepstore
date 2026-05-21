@@ -25,6 +25,7 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - [x] Create "Meus Pedidos" order history page
 - [x] Add "Meus Pedidos" route and nav link
 - [x] Add user avatar/icon in header with auth-aware dropdown (login/logout/meus pedidos)
+- [x] Add login modal with email/password fields, social login buttons when clicking user icon
 
 ## Progress Log
 - 2026-05-19: Plan approved, template initialized, 4 images generated
@@ -33,3 +34,4 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - 2026-05-21: Checkout page created with personal data form, order summary, PIX/card payment, cart clearing on confirmation
 - 2026-05-21: Backend orders table created, Checkout integrated with auth + order saving, Meus Pedidos page added with order history
 - 2026-05-21: Added user avatar icon in header with auth check - shows login button when not authenticated, dropdown with "Meus Pedidos" and "Sair" when logged in
+- 2026-05-21: Added LoginModal with email/password fields, social login (Google/Facebook), "Esqueceu a senha?" and "Criar conta" links - opens when clicking user icon
