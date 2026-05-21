@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Search, ShoppingCart, Menu, X, Facebook, Instagram } from "lucide-react";
 import SearchModal from "@/components/SearchModal";
 import CartDrawer from "@/components/CartDrawer";
@@ -25,12 +26,12 @@ export default function Header() {
       <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#0a0a0f]/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <img src={LOGO_URL} alt="Keep Store" className="h-10 w-10 rounded-lg" />
             <span className="text-xl font-bold text-white">
               Keep<span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Store</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-6 md:flex">
