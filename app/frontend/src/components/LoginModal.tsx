@@ -8,9 +8,10 @@ const client = createClient();
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSwitchToRegister?: () => void;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -29,9 +30,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     await client.auth.toLogin();
   };
 
-  const handleCreateAccount = async () => {
+  const handleCreateAccount = () => {
     onClose();
-    await client.auth.toLogin();
+    if (onSwitchToRegister) {
+      onSwitchToRegister();
+    }
   };
 
   return (

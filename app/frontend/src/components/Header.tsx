@@ -6,6 +6,7 @@ import { createClient } from "@metagptx/web-sdk";
 import SearchModal from "@/components/SearchModal";
 import CartDrawer from "@/components/CartDrawer";
 import LoginModal from "@/components/LoginModal";
+import RegisterModal from "@/components/RegisterModal";
 import { useCart } from "@/context/CartContext";
 
 const client = createClient();
@@ -25,6 +26,7 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { totalItems } = useCart();
   const navigate = useNavigate();
@@ -197,7 +199,18 @@ export default function Header() {
       <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
 
       {/* Login Modal */}
-      <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
+      <LoginModal
+        isOpen={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        onSwitchToRegister={() => { setLoginOpen(false); setRegisterOpen(true); }}
+      />
+
+      {/* Register Modal */}
+      <RegisterModal
+        isOpen={registerOpen}
+        onClose={() => setRegisterOpen(false)}
+        onSwitchToLogin={() => { setRegisterOpen(false); setLoginOpen(true); }}
+      />
     </>
   );
 }
