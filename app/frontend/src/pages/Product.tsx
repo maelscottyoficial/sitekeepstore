@@ -5,6 +5,8 @@ import type { Product as ProductType } from "@/data/products";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
+import { useCart } from "@/context/CartContext";
+import { toast } from "sonner";
 
 const allProducts = [...promotionalProducts, ...bestSellers];
 
@@ -20,6 +22,7 @@ function getRelatedProducts(product: ProductType): ProductType[] {
 
 export default function Product() {
   const { id } = useParams<{ id: string }>();
+  const { addItem } = useCart();
   const product = allProducts.find((p) => p.id === Number(id));
 
   if (!product) {
@@ -110,7 +113,13 @@ export default function Product() {
 
           {/* Action Buttons */}
           <div className="mb-6 flex flex-col gap-3 sm:flex-row">
-            <button className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/40 hover:brightness-110">
+            <button
+              onClick={() => {
+                addItem(product);
+                toast.success("Produto adicionado ao carrinho!");
+              }}
+              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:shadow-indigo-500/40 hover:brightness-110"
+            >
               <ShoppingCart className="h-5 w-5" />
               COMPRAR AGORA
             </button>
