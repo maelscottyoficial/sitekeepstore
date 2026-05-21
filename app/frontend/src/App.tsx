@@ -8,6 +8,7 @@ import Index from './pages/Index';
 import Product from './pages/Product';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
+import PageTransition from './components/PageTransition';
 // MODULE_IMPORTS_START
 // MODULE_IMPORTS_END
 
@@ -22,15 +23,17 @@ function ScrollToTop() {
 }
 
 const AppRoutes = () => (
-  <Routes>
-    <Route path="/" element={<Index />} />
-    <Route path="/produto/:id" element={<Product />} />
-    {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
-    <Route path="/auth/callback" element={<AuthCallback />} />
-    <Route path="/auth/error" element={<AuthError />} />
-    {/* MODULE_ROUTES_START */}
-    {/* MODULE_ROUTES_END */}
-  </Routes>
+  <PageTransition>
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/produto/:id" element={<Product />} />
+      {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
+      <Route path="/auth/callback" element={<AuthCallback />} />
+      <Route path="/auth/error" element={<AuthError />} />
+      {/* MODULE_ROUTES_START */}
+      {/* MODULE_ROUTES_END */}
+    </Routes>
+  </PageTransition>
 );
 
 const App = () => (
