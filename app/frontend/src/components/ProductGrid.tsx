@@ -1,6 +1,8 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import type { Product } from "@/data/products";
+import { useCart } from "@/context/CartContext";
 
 interface ProductGridProps {
   title: string;
@@ -13,6 +15,14 @@ function formatPrice(value: number): string {
 }
 
 export default function ProductGrid({ title, products, id }: ProductGridProps) {
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent, product: Product) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product);
+    toast.success("Produto adicionado ao carrinho!");
+  };
   return (
     <section id={id} className="py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -65,9 +75,13 @@ export default function ProductGrid({ title, products, id }: ProductGridProps) {
                   </p>
 
                   {/* Buy Button */}
-                  <span className="block w-full rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all group-hover:shadow-lg group-hover:shadow-indigo-500/25 group-hover:brightness-110">
+                  <button
+                    onClick={(e) => handleAddToCart(e, product)}
+                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all hover:shadow-lg hover:shadow-indigo-500/25 hover:brightness-110"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
                     COMPRAR
-                  </span>
+                  </button>
                 </div>
               </div>
             </Link>

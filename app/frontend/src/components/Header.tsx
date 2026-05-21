@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Search, ShoppingCart, Menu, X, Facebook, Instagram } from "lucide-react";
 import SearchModal from "@/components/SearchModal";
+import CartDrawer from "@/components/CartDrawer";
+import { useCart } from "@/context/CartContext";
 
 const LOGO_URL = "https://mgx-backend-cdn.metadl.com/generate/images/1250664/2026-05-19/o25f63iaagqq/keepstore-logo.png";
 
@@ -15,6 +17,8 @@ const navLinks = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const { totalItems } = useCart();
 
   return (
     <>
@@ -58,11 +62,17 @@ export default function Header() {
             >
               <Search className="h-5 w-5" />
             </button>
-            <button className="relative rounded-full p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white">
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative rounded-full p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+              aria-label="Abrir carrinho"
+            >
               <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white">
-                0
-              </span>
+              {totalItems > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-500 text-[10px] font-bold text-white">
+                  {totalItems > 9 ? "9+" : totalItems}
+                </span>
+              )}
             </button>
             <button
               className="rounded-full p-2 text-gray-400 md:hidden"
@@ -94,6 +104,9 @@ export default function Header() {
 
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Cart Drawer */}
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   );
 }

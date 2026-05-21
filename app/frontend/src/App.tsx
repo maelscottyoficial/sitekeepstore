@@ -10,6 +10,7 @@ import Category from './pages/Category';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
 import PageTransition from './components/PageTransition';
+import { CartProvider } from './context/CartContext';
 // MODULE_IMPORTS_START
 // MODULE_IMPORTS_END
 
@@ -40,16 +41,18 @@ const AppRoutes = () => (
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    {/* MODULE_PROVIDERS_START */}
-    {/* MODULE_PROVIDERS_END */}
-    <TooltipProvider>
-      <Toaster />
-      <BrowserRouter>
-        <ScrollToTop />
-        <AppRoutes />
-      </BrowserRouter>
-    </TooltipProvider>
-    {/* MODULE_PROVIDERS_CLOSE */}
+    <CartProvider>
+      {/* MODULE_PROVIDERS_START */}
+      {/* MODULE_PROVIDERS_END */}
+      <TooltipProvider>
+        <Toaster />
+        <BrowserRouter>
+          <ScrollToTop />
+          <AppRoutes />
+        </BrowserRouter>
+      </TooltipProvider>
+      {/* MODULE_PROVIDERS_CLOSE */}
+    </CartProvider>
   </QueryClientProvider>
 );
 
