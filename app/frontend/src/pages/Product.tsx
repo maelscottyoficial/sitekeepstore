@@ -4,6 +4,7 @@ import { promotionalProducts, bestSellers } from "@/data/products";
 import type { Product as ProductType } from "@/data/products";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProductGallery from "@/components/ProductGallery";
 
 const allProducts = [...promotionalProducts, ...bestSellers];
 
@@ -71,19 +72,8 @@ export default function Product() {
             {product.name}
           </h1>
 
-          {/* Product Image - Below Title */}
-          <div className="relative mb-8 overflow-hidden rounded-2xl border border-white/5">
-            {product.discount && (
-              <div className="absolute left-4 top-4 z-10 rounded-full bg-gradient-to-r from-red-500 to-rose-500 px-3 py-1.5 text-sm font-bold text-white shadow-lg">
-                {product.discount}% OFF
-              </div>
-            )}
-            <div className={`flex aspect-[4/3] items-center justify-center bg-gradient-to-br ${product.gradient}`}>
-              <div className="flex h-32 w-32 items-center justify-center rounded-3xl bg-white/10 backdrop-blur-sm">
-                <ShoppingCart className="h-16 w-16 text-white/50" />
-              </div>
-            </div>
-          </div>
+          {/* Product Gallery - Below Title */}
+          <ProductGallery productGradient={product.gradient} discount={product.discount} />
 
           {/* Rating */}
           <div className="mb-6 flex items-center gap-2">
