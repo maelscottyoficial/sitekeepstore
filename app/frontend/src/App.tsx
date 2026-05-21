@@ -7,6 +7,7 @@ import BlogRoutes from './blog-routes';
 import Index from './pages/Index';
 import Product from './pages/Product';
 import Category from './pages/Category';
+import Checkout from './pages/Checkout';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
 import PageTransition from './components/PageTransition';
@@ -30,6 +31,7 @@ const AppRoutes = () => (
       <Route path="/" element={<Index />} />
       <Route path="/produto/:id" element={<Product />} />
       <Route path="/categoria/:slug" element={<Category />} />
+      <Route path="/checkout" element={<Checkout />} />
       {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/auth/error" element={<AuthError />} />
