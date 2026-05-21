@@ -1,9 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Search, ShoppingCart, Menu, X, Facebook, Instagram } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, ShoppingCart, Menu, X, Facebook, Instagram, User, LogOut, Package } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { createClient } from "@metagptx/web-sdk";
 import SearchModal from "@/components/SearchModal";
 import CartDrawer from "@/components/CartDrawer";
 import { useCart } from "@/context/CartContext";
+
+const client = createClient();
 
 const LOGO_URL = "https://mgx-backend-cdn.metadl.com/generate/images/1250664/2026-05-19/o25f63iaagqq/keepstore-logo.png";
 
@@ -12,7 +16,6 @@ const navLinks = [
   { label: "Categorias", href: "#categorias" },
   { label: "Promoções", href: "#promocoes" },
   { label: "Mais Vendidos", href: "#mais-vendidos" },
-  { label: "Meus Pedidos", href: "/meus-pedidos" },
   { label: "Contato", href: "#contato" },
 ];
 
@@ -20,7 +23,30 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { totalItems } = useCart();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const resp = await client.auth.me();
+        setIsLoggedIn(!!resp?.data);
+      } catch {
+        setIsLoggedIn(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const handleLogin = async () => {
+    await client.auth.toLogin();
+  };
+
+  const handleLogout = async () => {
+    await client.auth.logout();
+    setIsLoggedIn(false);
+  };
 
   return (
     <>
@@ -86,6 +112,43 @@ export default function Header() {
                 </span>
               )}
             </button>
+            {!isLoggedIn ? (
+              <button
+                onClick={handleLogin}
+                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+                aria-label="Entrar"
+              >
+                <User className="h-5 w-5" />
+              </button>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    className="relative rounded-full p-2 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+                    aria-label="Menu do usuário"
+                  >
+                    <User className="h-5 w-5" />
+                    <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-green-500" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="bg-[#1a1a2e] border-white/10">
+                  <DropdownMenuItem
+                    onClick={() => navigate("/meus-pedidos")}
+                    className="cursor-pointer text-gray-200 focus:bg-white/10 focus:text-white"
+                  >
+                    <Package className="mr-2 h-4 w-4" />
+                    Meus Pedidos
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="cursor-pointer text-gray-200 focus:bg-white/10 focus:text-white"
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sair
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
             <button
               className="rounded-full p-2 text-gray-400 md:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
