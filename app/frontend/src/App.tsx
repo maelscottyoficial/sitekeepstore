@@ -9,6 +9,8 @@ import Product from './pages/Product';
 import Category from './pages/Category';
 import Checkout from './pages/Checkout';
 import MeusPedidos from './pages/MeusPedidos';
+import AdminProducts from './pages/AdminProducts';
+import AdminOrders from './pages/AdminOrders';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
 import PageTransition from './components/PageTransition';
@@ -34,6 +36,8 @@ const AppRoutes = () => (
       <Route path="/categoria/:slug" element={<Category />} />
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/meus-pedidos" element={<MeusPedidos />} />
+      <Route path="/admin/produtos" element={<AdminProducts />} />
+      <Route path="/admin/pedidos" element={<AdminOrders />} />
       {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/auth/error" element={<AuthError />} />

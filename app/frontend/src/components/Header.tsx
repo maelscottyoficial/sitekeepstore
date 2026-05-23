@@ -144,6 +144,13 @@ export default function Header() {
                     Meus Pedidos
                   </DropdownMenuItem>
                   <DropdownMenuItem
+                    onClick={() => navigate("/admin/produtos")}
+                    className="cursor-pointer text-gray-200 focus:bg-white/10 focus:text-white"
+                  >
+                    <Package className="mr-2 h-4 w-4" />
+                    Painel Admin
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
                     onClick={handleLogout}
                     className="cursor-pointer text-gray-200 focus:bg-white/10 focus:text-white"
                   >

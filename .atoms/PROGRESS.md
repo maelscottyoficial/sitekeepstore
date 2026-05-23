@@ -27,6 +27,11 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - [x] Add user avatar/icon in header with auth-aware dropdown (login/logout/meus pedidos)
 - [x] Add login modal with email/password fields, social login buttons when clicking user icon
 - [x] Create RegisterModal with nome completo, e-mail, telefone, senha, confirmar senha fields
+- [x] Create backend products table and API endpoints
+- [x] Create Admin Dashboard page with product CRUD management
+- [x] Create Admin Orders page to view/manage all orders and update status
+- [x] Add admin routes to App.tsx with ProtectedAdminRoute guard
+- [x] Add admin link in Header dropdown for admin users
 
 ## Progress Log
 - 2026-05-19: Plan approved, template initialized, 4 images generated
@@ -37,3 +42,5 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - 2026-05-21: Added user avatar icon in header with auth check - shows login button when not authenticated, dropdown with "Meus Pedidos" and "Sair" when logged in
 - 2026-05-21: Added LoginModal with email/password fields, social login (Google/Facebook), "Esqueceu a senha?" and "Criar conta" links - opens when clicking user icon
 - 2026-05-21: Created RegisterModal with nome completo, e-mail, telefone (com máscara), senha, confirmar senha - acessível pelo "Criar conta" do login modal
+- 2026-05-23: Admin panel created - AdminProducts page (CRUD with table, create/edit dialog, delete confirmation, status toggle), AdminOrders page (view all orders, update status, order detail modal), AdminLayout with sidebar navigation, routes added to App.tsx, "Painel Admin" link in Header dropdown
+- 2026-05-23: Backend products table populated with 18 products (promotional + bestsellers), admin panel validated with lint+build passing
