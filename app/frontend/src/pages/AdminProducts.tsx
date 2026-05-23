@@ -35,7 +35,7 @@ interface ProductEntity {
   discount?: number;
   installments?: number;
   installment_price?: number;
-  status?: string;
+  active?: boolean;
   created_at?: string;
 }
 
@@ -47,7 +47,7 @@ interface ProductForm {
   discount: string;
   installments: string;
   installment_price: string;
-  status: string;
+  active: string;
 }
 
 const emptyForm: ProductForm = {
@@ -58,7 +58,7 @@ const emptyForm: ProductForm = {
   discount: "",
   installments: "12",
   installment_price: "",
-  status: "active",
+  active: "true",
 };
 
 export default function AdminProducts() {
@@ -108,7 +108,7 @@ export default function AdminProducts() {
       discount: String(product.discount || ""),
       installments: String(product.installments || "12"),
       installment_price: String(product.installment_price || ""),
-      status: product.status || "active",
+      active: product.active === false ? "false" : "true",
     });
     setDialogOpen(true);
   };
@@ -129,7 +129,7 @@ export default function AdminProducts() {
         discount: form.discount ? parseInt(form.discount) : undefined,
         installments: form.installments ? parseInt(form.installments) : 12,
         installment_price: form.installment_price ? parseFloat(form.installment_price) : undefined,
-        status: form.status,
+        active: form.active === "true",
       };
 
       if (editingProduct) {
@@ -165,11 +165,11 @@ export default function AdminProducts() {
   };
 
   const toggleStatus = async (product: ProductEntity) => {
-    const newStatus = product.status === "active" ? "inactive" : "active";
+    const newActive = product.active === false ? true : false;
     try {
       await client.entities.products.update({
         id: product.id,
-        data: { status: newStatus },
+        data: { active: newActive },
       });
       await fetchProducts();
     } catch (err) {
@@ -259,12 +259,12 @@ export default function AdminProducts() {
                           <Badge
                             variant="secondary"
                             className={
-                              product.status === "active"
+                              product.active !== false
                                 ? "bg-green-500/20 text-green-400 border-green-500/30 cursor-pointer"
                                 : "bg-red-500/20 text-red-400 border-red-500/30 cursor-pointer"
                             }
                           >
-                            {product.status === "active" ? "Ativo" : "Inativo"}
+                            {product.active !== false ? "Ativo" : "Inativo"}
                           </Badge>
                         </button>
                       </td>
@@ -384,12 +384,12 @@ export default function AdminProducts() {
             <div className="space-y-2">
               <Label className="text-gray-300">Status</Label>
               <select
-                value={form.status}
-                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                value={form.active}
+                onChange={(e) => setForm({ ...form, active: e.target.value })}
                 className="w-full rounded-md bg-[#0a0a0f] border border-white/10 text-white px-3 py-2 text-sm"
               >
-                <option value="active">Ativo</option>
-                <option value="inactive">Inativo</option>
+                <option value="true">Ativo</option>
+                <option value="false">Inativo</option>
               </select>
             </div>
           </div>
