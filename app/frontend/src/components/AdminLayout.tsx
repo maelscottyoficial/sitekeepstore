@@ -1,13 +1,14 @@
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createClient } from "@metagptx/web-sdk";
-import { Package, ShoppingCart, ArrowLeft, Loader2, LogIn, LayoutDashboard } from "lucide-react";
+import { Package, ShoppingCart, ArrowLeft, Loader2, LogIn, LayoutDashboard, Settings } from "lucide-react";
 
 const client = createClient();
 
 const sidebarLinks = [
   { label: "Produtos", href: "/admin/produtos", icon: Package },
   { label: "Pedidos", href: "/admin/pedidos", icon: ShoppingCart },
+  { label: "Configurações", href: "/admin/configuracoes", icon: Settings },
 ];
 
 interface AdminLayoutProps {

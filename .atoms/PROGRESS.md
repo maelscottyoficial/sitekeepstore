@@ -44,3 +44,4 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - 2026-05-21: Created RegisterModal with nome completo, e-mail, telefone (com máscara), senha, confirmar senha - acessível pelo "Criar conta" do login modal
 - 2026-05-23: Admin panel created - AdminProducts page (CRUD with table, create/edit dialog, delete confirmation, status toggle), AdminOrders page (view all orders, update status, order detail modal), AdminLayout with sidebar navigation, routes added to App.tsx, "Painel Admin" link in Header dropdown
 - 2026-05-23: Backend products table populated with 18 products (promotional + bestsellers), admin panel validated with lint+build passing
+- 2026-05-24: Added AdminSettings page at /admin/configuracoes for Mercado Pago API keys (Access Token + Public Key) with show/hide toggles, save button, dark theme - lint+build passing

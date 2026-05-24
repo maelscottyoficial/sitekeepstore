@@ -11,6 +11,7 @@ import Checkout from './pages/Checkout';
 import MeusPedidos from './pages/MeusPedidos';
 import AdminProducts from './pages/AdminProducts';
 import AdminOrders from './pages/AdminOrders';
+import AdminSettings from './pages/AdminSettings';
 import AuthCallback from './pages/AuthCallback';
 import AuthError from './pages/AuthError';
 import PageTransition from './components/PageTransition';
@@ -38,6 +39,7 @@ const AppRoutes = () => (
       <Route path="/meus-pedidos" element={<MeusPedidos />} />
       <Route path="/admin/produtos" element={<AdminProducts />} />
       <Route path="/admin/pedidos" element={<AdminOrders />} />
+      <Route path="/admin/configuracoes" element={<AdminSettings />} />
       {/* <Route path="/blog/*" element={<BlogRoutes />} /> */}
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route path="/auth/error" element={<AuthError />} />
