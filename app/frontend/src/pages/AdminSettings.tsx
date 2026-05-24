@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { createClient } from "@metagptx/web-sdk";
 import { Eye, EyeOff, Loader2, Save, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import AdminLayout from "@/components/AdminLayout";
-
-const client = createClient();
+import { settingsApi } from "@/api/settings";
 
 export default function AdminSettings() {
   const [accessToken, setAccessToken] = useState("");
@@ -20,9 +18,9 @@ export default function AdminSettings() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const resp = await client.callApi("GET", "/api/v1/admin/settings");
-        if (resp?.data?.backend_vars) {
-          const vars = resp.data.backend_vars;
+        const config = await settingsApi.getConfig();
+        if (config?.backend_vars) {
+          const vars = config.backend_vars;
           if (vars.MERCADO_PAGO_ACCESS_TOKEN) {
             setAccessToken(vars.MERCADO_PAGO_ACCESS_TOKEN.value || "");
           }
@@ -43,14 +41,12 @@ export default function AdminSettings() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      const saveKey = async (key: string, value: string) => {
-        await client.callApi("PUT", `/api/v1/admin/settings/backend/${key}`, {
-          body: { value },
-        });
-      };
-
-      await saveKey("MERCADO_PAGO_ACCESS_TOKEN", accessToken);
-      await saveKey("MERCADO_PAGO_PUBLIC_KEY", publicKey);
+      if (accessToken) {
+        await settingsApi.updateBackendConfig("MERCADO_PAGO_ACCESS_TOKEN", accessToken);
+      }
+      if (publicKey) {
+        await settingsApi.updateBackendConfig("MERCADO_PAGO_PUBLIC_KEY", publicKey);
+      }
 
       toast.success("Configurações salvas com sucesso!");
     } catch (err) {
@@ -61,11 +57,7 @@ export default function AdminSettings() {
     }
   };
 
-  const maskValue = (value: string) => {
-    if (!value) return "";
-    if (value.length <= 8) return "••••••••";
-    return value.slice(0, 4) + "••••••••" + value.slice(-4);
-  };
+
 
   return (
     <AdminLayout>
