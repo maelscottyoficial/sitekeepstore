@@ -180,7 +180,7 @@ export default function AdminProducts() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-bold text-white">Produtos</h1>
             <p className="text-gray-400 text-sm mt-1">
@@ -189,7 +189,7 @@ export default function AdminProducts() {
           </div>
           <Button
             onClick={openCreateDialog}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white w-full sm:w-auto"
           >
             <Plus className="w-4 h-4 mr-2" />
             Novo Produto
@@ -210,7 +210,7 @@ export default function AdminProducts() {
         ) : (
           <div className="bg-[#1a1a2e] rounded-xl border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[700px]">
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left px-6 py-4 text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -299,7 +299,7 @@ export default function AdminProducts() {
 
       {/* Create/Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="bg-[#1a1a2e] border-white/10 text-white max-w-lg">
+        <DialogContent className="bg-[#1a1a2e] border-white/10 text-white max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-white">
               {editingProduct ? "Editar Produto" : "Novo Produto"}
@@ -324,7 +324,7 @@ export default function AdminProducts() {
                 placeholder="Ex: Smartwatches, Fones de Ouvido"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-gray-300">Preço Atual (R$)</Label>
                 <Input
@@ -348,7 +348,7 @@ export default function AdminProducts() {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <Label className="text-gray-300">Desconto (%)</Label>
                 <Input

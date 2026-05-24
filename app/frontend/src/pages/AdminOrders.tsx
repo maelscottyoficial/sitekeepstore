@@ -134,7 +134,7 @@ export default function AdminOrders() {
         ) : (
           <div className="bg-[#1a1a2e] rounded-xl border border-white/10 overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[700px]">
                 <thead>
                   <tr className="border-b border-white/10">
                     <th className="text-left px-6 py-4 text-xs font-medium text-gray-400 uppercase tracking-wider">
@@ -211,7 +211,7 @@ export default function AdminOrders() {
 
       {/* Order Detail Dialog */}
       <Dialog open={!!detailOrder} onOpenChange={() => setDetailOrder(null)}>
-        <DialogContent className="bg-[#1a1a2e] border-white/10 text-white max-w-lg">
+        <DialogContent className="bg-[#1a1a2e] border-white/10 text-white max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center justify-between">
               Detalhes do Pedido
@@ -227,7 +227,7 @@ export default function AdminOrders() {
           </DialogHeader>
           {detailOrder && (
             <div className="space-y-4 py-2">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs text-gray-500 uppercase">Cliente</p>
                   <p className="text-sm text-white">{detailOrder.customer_name}</p>

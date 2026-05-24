@@ -1,7 +1,7 @@
-import { Link, useLocation, Navigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createClient } from "@metagptx/web-sdk";
-import { Package, ShoppingCart, ArrowLeft, Loader2, LogIn, LayoutDashboard, Settings } from "lucide-react";
+import { Package, ShoppingCart, ArrowLeft, Loader2, LogIn, LayoutDashboard, Settings, Menu, X } from "lucide-react";
 
 const client = createClient();
 
@@ -18,6 +18,7 @@ interface AdminLayoutProps {
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -30,6 +31,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     };
     checkAuth();
   }, []);
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   if (isAuthenticated === null) {
     return (
@@ -60,15 +66,55 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] flex">
+      {/* Mobile Header Bar */}
+      <div className="fixed top-0 left-0 right-0 z-40 md:hidden bg-[#0d0d1a] border-b border-white/10 px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <LayoutDashboard className="w-5 h-5 text-indigo-400" />
+          <span className="text-base font-bold text-white">
+            Admin<span className="text-indigo-400">Panel</span>
+          </span>
+        </div>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+          aria-label="Toggle menu"
+        >
+          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/60 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 border-r border-white/10 bg-[#0d0d1a] flex flex-col">
-        <div className="p-6 border-b border-white/10">
+      <aside
+        className={`
+          fixed top-0 left-0 z-50 h-full w-64 border-r border-white/10 bg-[#0d0d1a] flex flex-col
+          transform transition-transform duration-300 ease-in-out
+          md:translate-x-0 md:static md:z-auto
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <LayoutDashboard className="w-6 h-6 text-indigo-400" />
             <span className="text-lg font-bold text-white">
               Admin<span className="text-indigo-400">Panel</span>
             </span>
           </div>
+          {/* Close button for mobile */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="md:hidden p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Close menu"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -104,8 +150,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
-        <div className="p-8">{children}</div>
+      <main className="flex-1 overflow-auto w-full">
+        <div className="p-4 pt-16 md:p-8 md:pt-8">{children}</div>
       </main>
     </div>
   );
