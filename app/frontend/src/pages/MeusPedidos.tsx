@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { createClient } from "@metagptx/web-sdk";
+import { createClient } from "@/lib/client";
 import { Package, ArrowLeft, LogIn, Loader2 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";

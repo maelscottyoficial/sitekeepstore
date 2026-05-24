@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createClient } from "@metagptx/web-sdk";
+import { createClient } from "@/lib/client";
 import { Package, ShoppingCart, ArrowLeft, Loader2, LogIn, LayoutDashboard, Settings, Menu, X } from "lucide-react";
 
 const client = createClient();

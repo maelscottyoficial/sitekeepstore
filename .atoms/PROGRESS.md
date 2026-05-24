@@ -32,6 +32,13 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - [x] Create Admin Orders page to view/manage all orders and update status
 - [x] Add admin routes to App.tsx with ProtectedAdminRoute guard
 - [x] Add admin link in Header dropdown for admin users
+- [x] Create local SDK replacement (src/lib/client.ts) to replace @metagptx/web-sdk
+- [x] Clean vite.config.ts from atoms.dev plugins
+- [x] Update all frontend imports to use local client instead of SDK
+- [x] Create .env.example for frontend and backend
+- [x] Create Dockerfile + docker-compose.yml for full-stack deployment
+- [x] Create DEPLOY.md with complete deployment instructions
+- [x] Validate lint + build passes after all changes
 
 ## Progress Log
 - 2026-05-19: Plan approved, template initialized, 4 images generated
@@ -45,3 +52,4 @@ Rebuild keepstore.com.br - Brazilian e-commerce tech store selling electronics (
 - 2026-05-23: Admin panel created - AdminProducts page (CRUD with table, create/edit dialog, delete confirmation, status toggle), AdminOrders page (view all orders, update status, order detail modal), AdminLayout with sidebar navigation, routes added to App.tsx, "Painel Admin" link in Header dropdown
 - 2026-05-23: Backend products table populated with 18 products (promotional + bestsellers), admin panel validated with lint+build passing
 - 2026-05-24: Added AdminSettings page at /admin/configuracoes for Mercado Pago API keys (Access Token + Public Key) with show/hide toggles, save button, dark theme - lint+build passing
+- 2026-05-24: Self-hosting deployment completed - removed @metagptx/web-sdk dependency, created local client.ts with full auth/entity API, cleaned vite.config.ts, created .env.example files, Dockerfiles, docker-compose.yml, nginx.conf, and DEPLOY.md - lint+build passing

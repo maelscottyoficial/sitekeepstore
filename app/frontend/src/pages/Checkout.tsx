@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
 import { ShoppingBag, CreditCard, QrCode, ArrowLeft, CheckCircle, Loader2 } from "lucide-react";
-import { createClient } from "@metagptx/web-sdk";
+import { createClient } from "@/lib/client";
 import { useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
